@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<aiml version="1.0">
+
+<category>
+	<pattern>AREA</pattern>
+	<template>The main Seattle campus covers 703 acres!</template>
+</category>
+
+<category>
+	<pattern>HOW MANY STUDENTS</pattern>
+	<template>Nearly 47,000</template>
+</category>
+
+<category>
+	<pattern>WHEN</pattern>
+	<template>The university was founded in 1861, but then it was known as the Territorial University of Washington. It has been the University of Washington since 1889.</template>
+</category>
+
+<category>
+	<pattern>COLOR</pattern>
+	<template>Purple and gold, of course!</template>
+</category>
+
+<category>
+	<pattern>MASCOT</pattern>
+	<template>The UW mascot is a husky, which is similar to a malamute.</template>
+</category>
+
+<category>
+	<pattern>*</pattern>
+	<template>Sorry, I can't answer that.</template>
+</category>
+
+</aiml>
