@@ -60,6 +60,20 @@ class Bot(BotBase):
         self.k = aiml.Kernel()
         self.k.bootstrap(learnFiles = "startup.xml", commands = "load alice", chdir = os.path.join(aiml.__path__[0], "botdata", "alice"))
 
+        # prepare vectors
+        model = skipthoughts.load_model()
+        encoder = skipthoughts.Encoder(model)
+
+        # load knowledge base
+        answers = list()
+        vectors = list()
+        with open("../../../data.txt", "r") as data_file :
+            answers = [line for line in data_file.readlines()]
+        with open("../../../vectors.txt", "r") as vector_file :
+            vectors = [[float(x) for x in line.split()] for line in vector_file.readlines()]
+
+        # vectorize
+        #vectors = encoder.encode(answers)
 
     def _handle_message_impl(
             self,
