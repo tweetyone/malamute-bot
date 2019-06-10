@@ -112,11 +112,11 @@ class Bot(BotBase):
             user_utterance = user_message.get_utterance()
             if user_utterance == 'stop':
                 bot_message.should_end_session = True
-            if user_utterance == 'yes':
+            elif user_utterance == 'yes':
                 input = self.sentences[-1]
                 print('flag1',input)
                 bot_message.response_ssml = self.kern.bestMatch(input)
-            if user_utterance == 'no':
+            elif user_utterance == 'no':
                 bot_message.response_ssml = self.noSts[np.random.randint(3)]
 
             else:
