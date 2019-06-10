@@ -25,14 +25,14 @@ class Match:
 		self.data = pd.read_csv("../data.csv",header=None)
 		self.questions = [q.lower() for q in self.data[1]]
 
-                # read big database
-                vectors = list()
-                with open("../../vectors.txt", "r") as vec_file :
-                    for line in vec_file.readlines() :
-                        vectors.append([float(x) for x in line.split()])
-                self.vectors = np.array(vectors)
-                with open("../../data.txt", "r") as data_file :
-                    self.sentences = [line for line in data_file.readlines()]
+		# read big database
+		vectors = list()
+		with open("../../vectors.txt", "r") as vec_file :
+		    for line in vec_file.readlines() :
+			vectors.append([float(x) for x in line.split()])
+		self.vectors = np.array(vectors)
+		with open("../../data.txt", "r") as data_file :
+		    self.sentences = [line for line in data_file.readlines()]
 
 		self.answers = self.data[2]
 		self.commonSts = ['Do you want to know more about UW?', 'What else do you want to know?','Is there any other information you would like to know?']
@@ -74,10 +74,10 @@ class Match:
 				idx = i
 		#print(idx, self.answers[idx])
 
-                answer_vec = self.encoder.encode([self.answers[idx]])[0]
-                answer_vec /= np.linalg.norm(answer_vec)
-                cos = np.sum(self.vectors * answer_vec, axis = 1)
-                best = self.sentences[np.argmin(cos)]
+		answer_vec = self.encoder.encode([self.answers[idx]])[0]
+		answer_vec /= np.linalg.norm(answer_vec)
+		cos = np.sum(self.vectors * answer_vec, axis = 1)
+		best = self.sentences[np.argmin(cos)]
 
 		reply = self.answers[idx] + " " + best + " " + self.commonSts[np.random.randint(3)]
 		return(reply)
