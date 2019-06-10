@@ -52,6 +52,8 @@ class Match:
 		#s1_afv = self.avg_feature_vector(userquestion,model= self.embeddings_index, num_features=300)
 		s1_afv = self.encoder.encode([userquestion.lower()])[0]
 		s1_afv /= np.linalg.norm(s1_afv)
+		s1_afv += (np.random.rand(s1_afv.shape[0]) / 100)
+		s1_afv /= np.linalg.norm(s1_afv)
 		min_cos = 10000
 		idx = 0
 		for i,q in enumerate(self.questions):
