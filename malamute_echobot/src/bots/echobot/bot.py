@@ -115,7 +115,8 @@ class Bot(BotBase):
             elif user_utterance == 'yes':
                 input = self.sentences[-1]
                 print('flag1',input)
-                bot_message.response_ssml = self.kern.bestMatch(input)
+                idx = np.random.randint(80)
+                bot_message.response_ssml = self.kern.bestMatchQues(idx)
             elif user_utterance == 'no':
                 bot_message.response_ssml = self.noSts[np.random.randint(3)]
 

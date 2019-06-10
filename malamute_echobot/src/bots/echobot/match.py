@@ -26,13 +26,13 @@ class Match:
 		self.questions = [q.lower() for q in self.data[1]]
 
 		# read big database
-		vectors = list()
-		with open("../../vectors.txt", "r") as vec_file :
-		    for line in vec_file.readlines() :
-			vectors.append([float(x) for x in line.split()])
-		self.vectors = np.array(vectors)
-		with open("../../data.txt", "r") as data_file :
-		    self.sentences = [line for line in data_file.readlines()]
+	#	vectors = list()
+	#	with open("../../vectors.txt", "r") as vec_file :
+	#		for line in vec_file.readlines() :
+	#			vectors.append([float(x) for x in line[1:-1].split()])
+	#	self.vectors = np.array(vectors)
+	#	with open("../../data.txt", "r") as data_file :
+	#		self.sentences = [line for line in data_file.readlines()]
 
 		self.answers = self.data[2]
 		self.commonSts = ['Do you want to know more about UW?', 'What else do you want to know?','Is there any other information you would like to know?']
@@ -61,7 +61,7 @@ class Match:
 		#s1_afv = self.avg_feature_vector(userquestion,model= self.embeddings_index, num_features=300)
 		s1_afv = self.encoder.encode([userquestion.lower()])[0]
 		s1_afv /= np.linalg.norm(s1_afv)
-		s1_afv += (np.random.rand(s1_afv.shape[0]) / 100)
+		s1_afv += (np.random.rand(s1_afv.shape[0]) / 19000)
 		s1_afv /= np.linalg.norm(s1_afv)
 		min_cos = 10000
 		idx = 0
@@ -74,10 +74,29 @@ class Match:
 				idx = i
 		#print(idx, self.answers[idx])
 
-		answer_vec = self.encoder.encode([self.answers[idx]])[0]
-		answer_vec /= np.linalg.norm(answer_vec)
-		cos = np.sum(self.vectors * answer_vec, axis = 1)
-		best = self.sentences[np.argmin(cos)]
+	#	answer_vec = self.encoder.encode([self.answers[idx]])[0]
+	#	answer_vec /= np.linalg.norm(answer_vec)
+	#	cos = np.sum(self.vectors * answer_vec, axis = 1)
+	#	best = self.sentences[np.argmin(cos)]
 
-		reply = self.answers[idx] + " " + best + " " + self.commonSts[np.random.randint(3)]
+		reply = self.answers[idx] + " " + self.commonSts[np.random.randint(3)]
+		return(reply)
+
+	def bestMatchQues(self,index):
+		userquestion = self.questions[index]
+		s1_afv = self.encoder.encode([userquestion.lower()])[0]
+		s1_afv /= np.linalg.norm(s1_afv)
+		s1_afv += (np.random.rand(s1_afv.shape[0]) / 19000)
+		s1_afv /= np.linalg.norm(s1_afv)
+		min_cos = 10000
+		idx = 0
+		for i,q in enumerate(self.questions):
+			#s2_afv = self.avg_feature_vector(q, model= self.embeddings_index, num_features=300)
+			s2_afv = self.question_vectors[i]
+			cos = distance.cosine(s1_afv, s2_afv)
+			if(cos < min_cos):
+				min_cos = cos
+				idx = i
+		#print(idx, self.answers[idx])
+		reply = "Someone else recently asked me: "+self.questions[idx] + " " + self.answers[idx]+" "+self.commonSts[np.random.randint(3)]
 		return(reply)
