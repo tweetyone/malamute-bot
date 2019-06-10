@@ -14,28 +14,25 @@ from scipy.spatial import distance
 
 from gensim.models import KeyedVectors
 
+import skipthoughts
+
 
 class Match:
 
 	def __init__(self):
 
 		# Read data from file 'filename.csv'
-		self.data = pd.read_csv("/Users/gaoxingyun/Documents/uw/courses/Sp19/EE596_ConvAI/ee596_spr2019_lab1/data.csv",header=None)
-		self.questions = self.data[1]
+		self.data = pd.read_csv("../data.csv",header=None)
+		self.questions = [q.lower() for q in self.data[1]]
 
 		self.answers = self.data[2]
 		self.commonSts = ['Do you want to know more about UW?', 'What else do you want to know?','Is there any other information you would like to know?']
 
+		model = skipthoughts.load_model()
+		self.encoder = skipthoughts.Encoder(model)
+		self.question_vectors = self.encoder.encode(self.questions)
 
-		self.filepath = "/Users/gaoxingyun/Documents/uw/courses/Sp19/EE596_ConvAI/ee596_spr2019_lab1/GoogleNews-vectors-negative300.bin"
-
-
-		self.wv_from_bin = KeyedVectors.load_word2vec_format(self.filepath, binary=True)
-		#extracting words7 vectors from google news vector
-		self.embeddings_index = {}
-		for word, vector in zip(self.wv_from_bin.vocab, self.wv_from_bin.vectors):
-		    self.coefs = np.asarray(vector, dtype='float32')
-		    self.embeddings_index[word] = self.coefs
+		self.question_vectors /= np.reshape(np.linalg.norm(self.question_vectors, axis = 1), (self.question_vectors.shape[0], 1))
 
 
 	def avg_feature_vector(self,sentence, model, num_features):
@@ -52,11 +49,14 @@ class Match:
 		return feature_vec
 
 	def bestMatch(self,userquestion):
-		s1_afv = self.avg_feature_vector(userquestion,model= self.embeddings_index, num_features=300)
+		#s1_afv = self.avg_feature_vector(userquestion,model= self.embeddings_index, num_features=300)
+		s1_afv = self.encoder.encode([userquestion.lower()])[0]
+		s1_afv /= np.linalg.norm(s1_afv)
 		min_cos = 10000
 		idx = 0
 		for i,q in enumerate(self.questions):
-			s2_afv = self.avg_feature_vector(q, model= self.embeddings_index, num_features=300)
+			#s2_afv = self.avg_feature_vector(q, model= self.embeddings_index, num_features=300)
+			s2_afv = self.question_vectors[i]
 			cos = distance.cosine(s1_afv, s2_afv)
 			if(cos < min_cos):
 				min_cos = cos

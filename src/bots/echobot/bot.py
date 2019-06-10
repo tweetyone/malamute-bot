@@ -13,6 +13,7 @@ from slowbro.core.bot_message import BotMessage
 from .session_attributes import SessionAttributes
 from .round_attributes import RoundAttributes
 
+import skipthoughts
 
 logger = logging.getLogger(__file__)
 
