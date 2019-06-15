@@ -1,0 +1,22 @@
+\begin{thebibliography}{}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Conroy et~al.(2007)Conroy, Schlesinger, O’Leary et~al.}]{classy}
+John~M Conroy, Judith~D Schlesinger, Dianne~P O’Leary, et~al. 2007.
+\newblock Classy 2007 at duc 2007.
+\newblock In {\em Proceedings of the Document Understanding Conference 2007\/}.
+
+\bibitem[{Huang et~al.(2007)Huang, Zhou, and Yang}]{huang}
+Jizhou Huang, Ming Zhou, and Dan Yang. 2007.
+\newblock Extracting chatbot knowledge from online discussion forums.
+\newblock In {\em IJCAI\/}. volume~7, pages 423--428.
+
+\bibitem[{Kiros et~al.(2015)Kiros, Zhu, Salakhutdinov, Zemel, Urtasun,
+  Torralba, and Fidler}]{kiros2015}
+Ryan Kiros, Yukun Zhu, Ruslan~R Salakhutdinov, Richard Zemel, Raquel Urtasun,
+  Antonio Torralba, and Sanja Fidler. 2015.
+\newblock Skip-thought vectors.
+\newblock In {\em Advances in neural information processing systems\/}. pages
+  3294--3302.
+
+\end{thebibliography}

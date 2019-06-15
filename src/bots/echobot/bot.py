@@ -13,6 +13,7 @@ from slowbro.core.bot_message import BotMessage
 from .session_attributes import SessionAttributes
 from .round_attributes import RoundAttributes
 
+import skipthoughts
 
 logger = logging.getLogger(__file__)
 
@@ -67,9 +68,9 @@ class Bot(BotBase):
         # load knowledge base
         answers = list()
         vectors = list()
-        with open("../../../data.txt", "r") as data_file :
+        with open("../data.txt", "r") as data_file :
             answers = [line for line in data_file.readlines()]
-        with open("../../../vectors.txt", "r") as vector_file :
+        with open("../vectors.txt", "r") as vector_file :
             vectors = [[float(x) for x in line.split()] for line in vector_file.readlines()]
 
         # vectorize
